@@ -1,0 +1,81 @@
+<html>
+	<head>
+	<style type='text/css'>
+		th {background-color: #CCCCFF;}
+		.header-wrapper {text-align:center; width: 100%; left: 0px; top: -20px; background: none repeat scroll 0 0 #FFFFFF; background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85)) repeat scroll 0 0 transparent;border-bottom: 1px solid #FFFFFF;box-shadow: 0 8px 19px rgba(0, 0, 0, 0.36); z-index: 1000;}
+		.cmd-table {text-align: left; padding: 5px 5px; border: 1px dotted #d4d4d4; background-color: #e8ecef}
+		.p-footer {text-align: center}
+		.details-div {border: 1px dashed gray; background-color: #f1f1f1; overflow: auto; padding: 15px; padding-bottom: 20px; font-family: DejaVu Sans Mono, Bitstream Vera Sans Mono, monospace, serif;}
+		.details-div h2 {color: #0e84b5;}.details-div li {color: black;}
+		.left-pane {top: 55px; text-align: left; vertical-align:top; padding: 15px 15px; border: 1px dotted #1279C6; background-color: #e8ecef}
+		.right-pane {text-align: left; padding: 4px 15px; border: 1px dotted #1279C6;}
+		.desc-heading {color: black ;font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;}
+		.codeblock { 
+			border: 1px solid #005cb9; border-radius:10px; background-color: #f1f5f9; overflow: auto; padding: 0px; font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+			white-space: pre-wrap; /* css-3 */
+			white-space: -moz-pre-wrap !important; 
+			white-space: -pre-wrap; /* Opera 4-6 */
+			white-space: -o-pre-wrap; /* Opera 7 */
+			word-wrap: break-word; /* Internet Explorer 5.5+ */
+		}
+	</style>
+	
+	<h2>Link Content Extractor API</h2>
+	</head>
+	<body>
+		<div>
+			About: 
+				Pass a link and get back the metadata about the link resource in a structured format.
+				
+			API reference:
+				The API takes the URI of target and parses the result and sends the JSON structured response
+			
+			Sample response:
+			{}
+			
+			Methods supported: 
+			
+			[GET]
+			You can make a HTTP GET request by passing the URI link in the request URL.
+			<div class = "codeblock">
+				http://fathomless-gorge-9230.herokuapp.com/api/query/[your-link-here]
+			</div>	
+			[POST]
+			You can even make a HTTP POST request by posting data with parameter named 'link'.
+			<div class = "codeblock">
+				http://fathomless-gorge-9230.herokuapp.com/api/extract
+			</div>	
+			
+			If you are using Ajax, you can use only GET method and POST cannot be used since cross-domain Ajax POST is not allowed as per <a href="http://en.wikipedia.org/wiki/Same_origin_policy">Same origin policy</a>
+			Here's how to use Ajax GET :
+			<div class = "codeblock">
+				var urlString = "http://fathomless-gorge-9230.herokuapp.com/api/query/"; 
+				$.getJSON(urlString + encodeURIComponent(givenURL), function(data, status){
+					if(status==="success"){
+						alert(JSON.stringify(data));
+					}
+					else{
+						alert("failure");
+					}
+				});
+			</div>	
+			Test:
+			 With Curl
+				Get: 
+				<div class = "codeblock">
+					curl http://fathomless-gorge-9230/api/query/[your-uri-encoded-link-here]
+				</div>	
+				Post: 
+				<div class = "codeblock">
+					curl --data "{"link": [your-link-here]}" http://fathomless-gorge-9230/api/extract
+				</div>	
+		</div>
+		Test the API.
+		Enter a URL in the text field below and hit "Extract" to fetch the parsed metadata for the given link.
+		<form method="POST" action="http://fathomless-gorge-9230.herokuapp.com/api/extract" enctype="application/x-www-form-urlencoded">
+			<input name="link" type="text" length="20" />
+			<input type="submit" value="Extract" id="btn"/>
+		</form>
+		Try the <a href="./ajax-example.html">Ajax version</a> of content extractor.
+	</body>
+</html>

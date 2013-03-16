@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<script src="./jquery-1.7.1.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#result").text("Ready.");
+			});
+			$("#btn").live("click", function()
+			{
+				$("#result").text("Fetching metadata. Hold on...");
+				var givenURL = $("#target-link").val();
+				var urlString = "http://fathomless-gorge-9230.herokuapp.com/api/query/";
+				$.getJSON(urlString + encodeURIComponent(givenURL), function(data, status){
+					if(status==="success"){
+						handler.success(data);
+					}
+					else{
+						handler.failure(data);
+					}
+				});
+			});
+			var handler = {
+				success:function(res){
+					$("#result").text(JSON.stringify(res).replace("\r\n",""));		
+				},
+				failure:function(err){
+					$("#result").text(JSON.stringify(err).replace("\r\n",""));		
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<input name="cmd" id="target-link" type="text" length=20/>
+		<input type="button" value="Extract" id="btn"/> <br/>
+		Extracted content:<br/><br/>
+		<div id="result"></div>
+	</body>
+</html>
